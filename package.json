@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint src/** test/** --fix"
+    "lint": "eslint src/** test/** --fix",
+    "test": "NODE_ENV=test jest --coverage --runInBand --forceExit",
+    "start": "node src/index.js",
+    "dev": "nodemon src/server.js",
+    "secure-mode": "jest --watch --verbose=true"
   },
   "keywords": [],
   "author": "",
