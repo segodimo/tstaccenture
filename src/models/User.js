@@ -12,14 +12,7 @@ const userSchema = new Schema(
         email: { type: String, required: true},
     }, {
         timestamps: true
-    });
-
-// const userSchema = new Schema(
-//     {
-//         username: {type: String, required: true},
-//         pass: { type: String, required: true},
-//     }, {
-//         timestamps: true
-//     });
+    }
+);
 
 module.exports = model('User', userSchema);

@@ -13,9 +13,5 @@ module.exports = (app) => {
 	});
 
 	const connection = mongoose.connection;
-
-	connection.once('open', () => {
-		console.log('((DB Conetado))');
-	});
 };
 

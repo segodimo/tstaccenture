@@ -1,52 +1,28 @@
 module.exports = app => {
-
-  const User = require('../models/users.js');
+  const User = require('../models/User.js');
   
   const findAll = async (req, res) => {
-
-
     try {
-        const users = await User.find();
-        res.json(users);
+      const users = await User.find();
+      res.status(200).json(users);
     }
     catch (err) {
-        res.status(400).json({
-            error: err
-        });
+      res.status(400).json({ error: err });
     }
-
-
-    // // const users = [
-    // //   { name: 'Carlitos', email: 'Buarque'},
-    // // ];
-    // const users = await User.find();
-    // console.log(users)
-    // res.status(200).json(users);
   };
 
   const create = async (req, res) => {
-
     try {
-        const { nome, senha, email  } = req.body;
-        console.log(req.body);
-        const newUser = new User({nome, senha, email});
-        await newUser.save();
-        res.json('User created');
+      const { nome, senha, email  } = req.body;
+      // console.log(req.body);
+      const newUser = new User({nome, senha, email});
+      await newUser.save();
+      res.status(201).json(newUser);
     } catch (e) {
-        console.log(e)
-        res.json(e.errmsg);
+      console.log(e)
+      //res.json(e.errmsg);
+      res.status(400).json(e.errmsg);
     }
-
-
-    // const { nome, email, senha } = req.body;
-    // console.log(nome, email, senha);
-    // const newUser = new User({
-    //   nome: nome,
-    //   email: email,
-    //   senha: senha
-    // });
-
-    // res.status(200).json(newUser);
   };
 
   return { findAll, create }
