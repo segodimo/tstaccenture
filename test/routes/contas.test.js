@@ -12,16 +12,8 @@ beforeAll(async () => {
 	const mail = `${Date.now()}@mail.com`;
 
   const res = await app.services.user.save({ nome: usnome, email: mail, senha: senha });
-  // console.log(res)
-  // console.log(res)
-  // console.log(res._id)
-  // const res = await app.services.user.save(req.body);
   // user = { ...res};
   user = res;
-  
-  // user.token = jwt.encode(user, 'Segredo!');
-  // const res2 = await app.services.user.save({ name: 'User Account #2', mail: `${Date.now()}@mail.com`, passwd: '123456' });
-  // user2 = { ...res2[0] };
 });
 
 test('Deve inserir uma conta com sucesso', async () => {
@@ -29,10 +21,31 @@ test('Deve inserir uma conta com sucesso', async () => {
   const usid = `id_${Date.now()}`;
 
   return await request(app).post(MAIN_ROUTE)
-    // .send({ nome: usnome, user_id: usid })
     .send({ nome: usnome, user_id: user._id })
     .then((result) => {
       expect(result.status).toBe(201);
-      // expect(result.body.name).toBe('Acc #1');
     });
 });
+
+
+test('Deve listar as contas', async () => {
+  const usnome = `ACC${Date.now()}`;
+  const usid = `id_${Date.now()}`;
+
+  const Conta = require('../../src/models/Conta.js');
+  const newConta = new Conta({ nome: usnome, user_id: user._id });
+  await newConta.save();
+
+  const result = await request(app).get(MAIN_ROUTE)
+    expect(result.status).toBe(200);
+    expect(result.body.length).toBeGreaterThan(0);
+
+});
+
+
+
+
+
+
+
+
