@@ -1,8 +1,12 @@
 module.exports = app => {
   const Conta = require('../models/Conta.js');
   
-  const findAll = async (filter = {}) => {
-      return await Conta.find(filter);
+  const find = async (filter = {}) => {
+      return await Conta.findOne({ _id: filter });
+  };
+  
+  const findAll = async () => {
+      return await Conta.find();
   };
 
   const save = async (ddconta) => {
@@ -13,5 +17,5 @@ module.exports = app => {
     return newConta;
   };
 
-  return { findAll, save }
+  return { find, findAll, save }
 }

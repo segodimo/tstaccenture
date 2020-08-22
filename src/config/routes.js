@@ -4,6 +4,10 @@ module.exports = (app) => {
   .post(app.routes.users.create)
 
   app.route('/contas')
-  .get(app.routes.contas.findAll)
+  .get(app.routes.contas.getAll)
   .post(app.routes.contas.create)
+
+
+  app.route('/contas/:id')
+  .get(app.routes.contas.get)
 }

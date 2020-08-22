@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../../src/app');
 
-
+const Conta = require('../../src/models/Conta.js');
 const MAIN_ROUTE = '/contas';
 let user;
 
@@ -32,7 +32,6 @@ test('Deve listar as contas', async () => {
   const usnome = `ACC${Date.now()}`;
   const usid = `id_${Date.now()}`;
 
-  const Conta = require('../../src/models/Conta.js');
   const newConta = new Conta({ nome: usnome, user_id: user._id });
   await newConta.save();
 
@@ -42,7 +41,20 @@ test('Deve listar as contas', async () => {
 
 });
 
+test('Deve retornar uma conta por id', async () => {
+  const usnome = `ACC${Date.now()}`;
+  const usid = `id_${Date.now()}`;
 
+  const newConta = new Conta({ nome: usnome, user_id: user._id });
+  const ddsConta = await newConta.save();
+  // await console.log(ddsConta,'ddsConta');
+
+  const result = await request(app).get(`${MAIN_ROUTE}/${ddsConta._id}`)
+    expect(result.status).toBe(200);
+    // expect(result.body.length).toBeGreaterThan(0);
+
+
+});
 
 
 

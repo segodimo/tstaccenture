@@ -1,9 +1,14 @@
 module.exports = app => {
 
-	const findAll = (req, res) => {
-	    app.services.conta.findAll()
+	const get = (req, res) => {
+	    app.services.conta.find(req.params.id)
 	    .then(result => res.status(200).json(result));
-	};  
+	};
+
+  const getAll = (req, res) => {
+      app.services.conta.findAll()
+      .then(result => res.status(200).json(result));
+  };  
 
   const create = async (req, res) => {
     const result = await  app.services.conta.save(req.body);
@@ -11,5 +16,5 @@ module.exports = app => {
     return res.status(201).json(result[0]);
   };
 
-  return { findAll, create }
+  return { get, getAll, create }
 }
