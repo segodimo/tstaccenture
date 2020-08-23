@@ -18,21 +18,46 @@ test('Deve inserir un usuario com sucesso', () => {
   return request(app).post('/users')
     .send({ nome: usnome, email: mail, senha: senha })
     .then((res) => {
+      // console.log(res.body);
       expect(res.status).toBe(201);
+      expect(res.body).toHaveProperty('nome');
+      expect(res.body).not.toHaveProperty('senha');
     });
 });
 
-test('Deve inserir un usuario com sucesso', () => {
+test('Deve armazenar uma senha criptografada', async () => {
   const usnome = `NOME_${Date.now()}`;
   const senha = `PASS${Date.now()}`;
   const mail = `${Date.now()}@mail.com`;
 
-  return request(app).post('/users')
-    .send({ nome: usnome, email: mail, senha: senha })
-    .then((res) => {
-      expect(res.status).toBe(201);
-    });
+  const res = await request(app).post('/users')
+  .send({ nome: usnome, email: mail, senha: senha });
+  expect(res.status).toBe(201);
+
+  const { _id } = res.body;
+  // console.log(_id);
+  const userDB = await app.services.user.find({ _id })
+  // console.log(userDB,'userDB');
+  expect(userDB[0].senha).not.toBeUndefined();
+
+  // return request(app).post('/users')
+  //   .send({ nome: usnome, email: mail, senha: senha })
+  //   .then((res) => {
+  //     expect(res.status).toBe(201);
+  //   });
 });
+
+// test('Deve inserir un usuario com sucesso', () => {
+//   const usnome = `NOME_${Date.now()}`;
+//   const senha = `PASS${Date.now()}`;
+//   const mail = `${Date.now()}@mail.com`;
+
+//   return request(app).post('/users')
+//     .send({ nome: usnome, email: mail, senha: senha })
+//     .then((res) => {
+//       expect(res.status).toBe(201);
+//     });
+// });
 
 test('Não deve inserir usuário sem nome', () => {
   const senha = `PASS${Date.now()}`;
