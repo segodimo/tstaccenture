@@ -1,10 +1,25 @@
 const request = require('supertest');
+const jwt = require('jwt-simple');
+
 const app = require('../../src/app');
 
 const mail = `${Date.now()}@mail.com`;
+let user;
+
+beforeAll(async () => {
+
+  const usnome = `NOME_${Date.now()}`;
+  const senha = `PASS${Date.now()}`;
+  const mail = `${Date.now()}@mail.com`;
+
+  const res = await app.services.user.save({ nome: usnome, email: mail, senha: senha });
+  user = res;
+  user.token = jwt.encode(user, 'Segredo!');
+});
 
 test('Deve listar todos os usuarios', () => {
   return request(app).get('/users')
+    .set('authorization', `bearer ${user.token}`)
     .then((res) => {
       expect(res.status).toBe(200);
       expect(res.body.length).toBeGreaterThan(0);
@@ -17,6 +32,7 @@ test('Deve inserir un usuario com sucesso', () => {
 
   return request(app).post('/users')
     .send({ nome: usnome, email: mail, senha: senha })
+    .set('authorization', `bearer ${user.token}`)
     .then((res) => {
       // console.log(res.body);
       expect(res.status).toBe(201);
@@ -31,7 +47,8 @@ test('Deve armazenar uma senha criptografada', async () => {
   const mail = `${Date.now()}@mail.com`;
 
   const res = await request(app).post('/users')
-  .send({ nome: usnome, email: mail, senha: senha });
+  .send({ nome: usnome, email: mail, senha: senha })
+  .set('authorization', `bearer ${user.token}`);
   expect(res.status).toBe(201);
 
   const { _id } = res.body;
@@ -40,30 +57,14 @@ test('Deve armazenar uma senha criptografada', async () => {
   // console.log(userDB,'userDB');
   expect(userDB[0].senha).not.toBeUndefined();
 
-  // return request(app).post('/users')
-  //   .send({ nome: usnome, email: mail, senha: senha })
-  //   .then((res) => {
-  //     expect(res.status).toBe(201);
-  //   });
 });
-
-// test('Deve inserir un usuario com sucesso', () => {
-//   const usnome = `NOME_${Date.now()}`;
-//   const senha = `PASS${Date.now()}`;
-//   const mail = `${Date.now()}@mail.com`;
-
-//   return request(app).post('/users')
-//     .send({ nome: usnome, email: mail, senha: senha })
-//     .then((res) => {
-//       expect(res.status).toBe(201);
-//     });
-// });
 
 test('Não deve inserir usuário sem nome', () => {
   const senha = `PASS${Date.now()}`;
 
   return request(app).post('/users')
     .send({ email: mail, senha: senha })
+    .set('authorization', `bearer ${user.token}`)
     .then((res) => {
       expect(res.status).toBe(400);
       expect(res.body.error).toBe('Nome é um atributo obrigatório');
@@ -76,6 +77,7 @@ test('Não deve inserir usuário sem email', async () => {
 
   const result = await request(app).post('/users')
     .send({ nome: usnome, senha: senha })
+    .set('authorization', `bearer ${user.token}`)
     expect(result.status).toBe(400);
     expect(result.body.error).toBe('E-mail é um atributo obrigatório');
 });
@@ -86,6 +88,7 @@ test('Não deve inserir usuário sem senha', (done) => {
 
   request(app).post('/users')
     .send({ nome: usnome, email: mail })
+    .set('authorization', `bearer ${user.token}`)
     .then((res) => {
       expect(res.status).toBe(400);
       expect(res.body.error).toBe('Senha é um atributo obrigatório');
@@ -100,6 +103,7 @@ test('Não deve inserir usuário com email existente', () => {
 
   return request(app).post('/users')
     .send({ nome: usnome, email: mail, senha: senha })
+    .set('authorization', `bearer ${user.token}`)
     .then((res) => {
       expect(res.status).toBe(400);
       expect(res.body.error).toBe('Já existe um usuário com esse email');

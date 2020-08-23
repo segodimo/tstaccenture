@@ -27,25 +27,14 @@ module.exports = app => {
 
     const { nome, senha, email  } = user;
 
-    // console.log(senha,'senha');
     const cryptSenha = getPasswdHash(senha);
-    // console.log(cryptSenha,'cryptSenha');
 
 
     const newUser = new User({nome, senha: cryptSenha, email});
-    // const newUser = new User({nome, cryptSenha, email});
-    // console.log(newUser,'newUser');
-    
+
     await newUser.save();
-    // console.log(newUser);
-    // const novoUser = { ...newUser };
-    // novoUser.senha = getPasswdHash(user.senha);
-    // res =  ({ _id: novoUser._id, nome: novoUser.nome, email: novoUser.email });
     res =  ({ _id: newUser._id, nome: newUser.nome, email: newUser.email });
-    /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-    // INCERIR SENHA CRIPTOGRAFADA NO BANCO DE DADOS
-    /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-    // console.log(res,'res');
+
     return res
   };
 

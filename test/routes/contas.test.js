@@ -1,4 +1,6 @@
 const request = require('supertest');
+const jwt = require('jwt-simple');
+
 const app = require('../../src/app');
 
 const Conta = require('../../src/models/Conta.js');
@@ -14,6 +16,7 @@ beforeAll(async () => {
   const res = await app.services.user.save({ nome: usnome, email: mail, senha: senha });
   // user = { ...res};
   user = res;
+  user.token = jwt.encode(user, 'Segredo!');
 });
 
 test('Deve inserir uma conta com sucesso', async () => {
@@ -22,6 +25,7 @@ test('Deve inserir uma conta com sucesso', async () => {
 
   return await request(app).post(MAIN_ROUTE)
     .send({ nome: usnome, user_id: user._id })
+    .set('authorization', `bearer ${user.token}`)
     .then((result) => {
       expect(result.status).toBe(201);
     });
@@ -30,6 +34,7 @@ test('Deve inserir uma conta com sucesso', async () => {
 test('Não deve inserir uma conta sem nome', () => {
   return request(app).post(MAIN_ROUTE)
     .send({ user_id: user._id })
+    .set('authorization', `bearer ${user.token}`)
     .then((result) => {
       expect(result.status).toBe(400);
       expect(result.body.error).toBe('Nome é um atributo obrigatório');
@@ -43,6 +48,7 @@ test('Deve listar as contas', async () => {
   await newConta.save();
 
   const result = await request(app).get(MAIN_ROUTE)
+    .set('authorization', `bearer ${user.token}`)
     expect(result.status).toBe(200);
     expect(result.body.length).toBeGreaterThan(0);
 
@@ -56,6 +62,7 @@ test('Deve retornar uma conta por id', async () => {
   // await console.log(ddsConta,'ddsConta');
 
   const result = await request(app).get(`${MAIN_ROUTE}/${ddsConta._id}`)
+    .set('authorization', `bearer ${user.token}`)
     expect(result.status).toBe(200);
     // expect(result.body.length).toBeGreaterThan(0);
 
