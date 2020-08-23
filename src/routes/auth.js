@@ -22,8 +22,8 @@ module.exports = (app) => {
         // console.log(user[0].senha,'user.senha');
         // console.log(user[0]._id,'user._id');
         
-        // if (bcrypt.compareSync(req.body.senha, user[0].senha)) {
-        if (req.body.senha == user[0].senha) {
+        // if (req.body.senha == user[0].senha) {
+        if (bcrypt.compareSync(req.body.senha, user[0].senha)) {
           const payload = {
             id: user[0].id,
             nome: user[0].nome,

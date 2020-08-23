@@ -26,7 +26,16 @@ module.exports = app => {
     if (userDb && userDb.length > 0) throw new ValidationError('Já existe um usuário com esse email');
 
     const { nome, senha, email  } = user;
-    const newUser = new User({nome, senha, email});
+
+    // console.log(senha,'senha');
+    const cryptSenha = getPasswdHash(senha);
+    // console.log(cryptSenha,'cryptSenha');
+
+
+    const newUser = new User({nome, senha: cryptSenha, email});
+    // const newUser = new User({nome, cryptSenha, email});
+    // console.log(newUser,'newUser');
+    
     await newUser.save();
     // console.log(newUser);
     // const novoUser = { ...newUser };
