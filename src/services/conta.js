@@ -1,4 +1,6 @@
-module.exports = app => {
+const ValidationError = require('../errors/ValidationError');
+
+module.exports = (app) => {
   const Conta = require('../models/Conta.js');
   
   const find = async (filter = {}) => {
@@ -9,9 +11,9 @@ module.exports = app => {
       return await Conta.find();
   };
 
-  const save = async (ddconta) => {
-
-    const { nome, user_id  } = ddconta;
+  const save = async (conta) => {
+    if (!conta.nome) throw new ValidationError('Nome é um atributo obrigatório');
+    const { nome, user_id  } = conta;
     const newConta = new Conta({nome, user_id});
     await newConta.save();
     return newConta;

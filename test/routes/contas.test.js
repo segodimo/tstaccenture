@@ -18,7 +18,7 @@ beforeAll(async () => {
 
 test('Deve inserir uma conta com sucesso', async () => {
   const usnome = `ACC${Date.now()}`;
-  const usid = `id_${Date.now()}`;
+  // const usid = `id_${Date.now()}`;
 
   return await request(app).post(MAIN_ROUTE)
     .send({ nome: usnome, user_id: user._id })
@@ -27,10 +27,17 @@ test('Deve inserir uma conta com sucesso', async () => {
     });
 });
 
+test('Não deve inserir uma conta sem nome', () => {
+  return request(app).post(MAIN_ROUTE)
+    .send({ user_id: user._id })
+    .then((result) => {
+      expect(result.status).toBe(400);
+      expect(result.body.error).toBe('Nome é um atributo obrigatório');
+    });
+});
 
 test('Deve listar as contas', async () => {
   const usnome = `ACC${Date.now()}`;
-  const usid = `id_${Date.now()}`;
 
   const newConta = new Conta({ nome: usnome, user_id: user._id });
   await newConta.save();
@@ -43,7 +50,6 @@ test('Deve listar as contas', async () => {
 
 test('Deve retornar uma conta por id', async () => {
   const usnome = `ACC${Date.now()}`;
-  const usid = `id_${Date.now()}`;
 
   const newConta = new Conta({ nome: usnome, user_id: user._id });
   const ddsConta = await newConta.save();
