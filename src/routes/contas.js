@@ -1,23 +1,26 @@
-module.exports = app => {
+const express = require('express');
 
-	const get = (req, res, next) => {
+module.exports = (app) => {
+  const router = express.Router();
+
+	router.get('/:id', (req, res, next) => {
 	    app.services.conta.find(req.params.id)
 	    .then(result => res.status(200).json(result))
       .catch(err => next(err))
-	};
+	});
 
-  const getAll = (req, res, next) => {
+  router.get('/', (req, res, next) => {
       app.services.conta.findAll()
       .then(result => res.status(200).json(result))
       .catch(err => next(err));
-  };  
+  });  
 
-  const create = (req, res, next) => {
+  router.post('/', (req, res, next) => {
       app.services.conta.save(req.body)
       .then((result) => {
         return res.status(201).json(result);
       }).catch(err => next(err));
-  };
+  });
 
-  return { get, getAll, create }
+  return router;
 }

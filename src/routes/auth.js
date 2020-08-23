@@ -6,9 +6,8 @@ const ValidationError = require('../errors/ValidationError');
 const secret = 'Segredo!';
 
 module.exports = (app) => {
-
-  const signin = (req, res, next) => {
-
+  const router = express.Router();
+  router.post('/signin', (req, res, next) => {
     app.services.user.find({ email: req.body.email })
       .then((user) => {
         if (!user[0]) throw new ValidationError('Usuário e/ou senha inválidos');
@@ -23,7 +22,14 @@ module.exports = (app) => {
         } else throw new ValidationError('Usuário e/ou senha inválidos');
       }).catch(err => next(err));
 
-  };
+  });
 
-  return { signin };
+  router.post('/signup', async (req, res, next) => {
+      app.services.user.save(req.body)
+      .then((result) => {
+        return res.status(201).json(result);
+      }).catch(err => next(err));
+  });
+
+  return router;
 };

@@ -4,7 +4,8 @@ const jwt = require('jwt-simple');
 const app = require('../../src/app');
 
 const Conta = require('../../src/models/Conta.js');
-const MAIN_ROUTE = '/contas';
+
+const MAIN_ROUTE = '/api/contas';
 let user;
 
 beforeAll(async () => {
