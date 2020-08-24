@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 module.exports = (app) => {
-  const URI = process.env.MONGODB_URI
-    ? process.env.MONGODB_URI
-    : 'mongodb://localhost/accndb';
+  // const URI = process.env.MONGODB_URI
+  //   ? process.env.MONGODB_URI
+  //   : 'mongodb://localhost/accndb';
 
-	// const URI = 'mongodb+srv://segodimo:4xTRFiByoRLr0TkD@cluster0.pehon.mongodb.net/test?retryWrites=true&w=majority';
+	const URI = 'mongodb+srv://segodimo:4xTRFiByoRLr0TkD@cluster0.pehon.mongodb.net/test?retryWrites=true&w=majority';
 
 
   mongoose.connect(URI, {
