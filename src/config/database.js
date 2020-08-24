@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 
 module.exports = (app) => {
-  const URI = process.env.MONGODB_URI
-    ? process.env.MONGODB_URI
-    : 'mongodb+srv://segodimo:4xTRFiByoRLr0TkD@cluster0.pehon.mongodb.net/tstaccenture?retryWrites=true&w=majority';
-    // : 'mongodb://localhost/accndb';
+  // const URI = process.env.MONGODB_URI
+  //   ? process.env.MONGODB_URI
+  //   : 'mongodb://localhost/accndb';
+
+	const URI = 'mongodb+srv://segodimo:4xTRFiByoRLr0TkD@cluster0.pehon.mongodb.net/test?retryWrites=true&w=majority';
+
 
   mongoose.connect(URI, {
     useNewUrlParser: true,
@@ -13,4 +15,8 @@ module.exports = (app) => {
   });
 
   const { connection } = mongoose;
+
+  connection.once('open', () => {
+  	console.log('Database is connected');
+  });
 };
