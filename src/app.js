@@ -12,7 +12,8 @@ consign({ cwd: 'src', verbose: false })
   .into(app);
 
 app.get('/', (req, res) => {
-  res.status(200).send();
+  res.status(200).json({ "mensagem": "servidor funcionando" });
+  // res.status(200).send();
 });
 
 app.use((err, req, res, next) => {
