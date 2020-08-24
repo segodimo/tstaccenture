@@ -1,15 +1,15 @@
 const bcrypt = require('bcrypt-nodejs');
 const ValidationError = require('../errors/ValidationError');
 
-module.exports = app => {
+module.exports = (app) => {
   const User = require('../models/User.js');
 
   const find = async (filter = {}) => {
-      return await User.find(filter);
+    return await User.find(filter);
   };
-  
+
   const findAll = async (filter = {}) => {
-      return await User.find(filter);
+    return await User.find(filter);
   };
 
   const getPasswdHash = (senha) => {
@@ -25,18 +25,17 @@ module.exports = app => {
     const userDb = await findAll({ email: user.email });
     if (userDb && userDb.length > 0) throw new ValidationError('Já existe um usuário com esse email');
 
-    const { nome, senha, email  } = user;
+    const { nome, senha, email } = user;
 
     const cryptSenha = getPasswdHash(senha);
 
-
-    const newUser = new User({nome, senha: cryptSenha, email});
+    const newUser = new User({ nome, senha: cryptSenha, email });
 
     await newUser.save();
-    res =  ({ _id: newUser._id, nome: newUser.nome, email: newUser.email });
+    res = ({ _id: newUser._id, nome: newUser.nome, email: newUser.email });
 
-    return res
+    return res;
   };
 
-  return { find, findAll, save }
-}
+  return { find, findAll, save };
+};

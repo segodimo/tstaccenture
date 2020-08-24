@@ -11,14 +11,12 @@ module.exports = (app) => {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   };
 
-
   const strategy = new Strategy(params, (payload, done) => {
-
     app.services.user.find({ _id: payload.id })
       .then((user) => {
         if (user) done(null, { ...payload });
         else done(null, false);
-      }).catch(err => done(err, false));
+      }).catch((err) => done(err, false));
   });
 
   passport.use(strategy);

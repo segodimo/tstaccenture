@@ -8,7 +8,7 @@ test('Deve criar usuário via signup', () => {
   const senha = `PASS${Date.now()}`;
 
   return request(app).post('/auth/signup')
-    .send({ nome: usnome, email: mail, senha: senha })
+    .send({ nome: usnome, email: mail, senha })
     .then((res) => {
       expect(res.status).toBe(201);
       expect(res.body.nome).toBe(usnome);
@@ -18,13 +18,13 @@ test('Deve criar usuário via signup', () => {
 });
 
 test('Deve receber token ao logar', () => {
-	const usnome = `NOME_${Date.now()}`;
-	const mail = `${Date.now()}@mail.com`;
-	const senha = `PASS${Date.now()}`;
+  const usnome = `NOME_${Date.now()}`;
+  const mail = `${Date.now()}@mail.com`;
+  const senha = `PASS${Date.now()}`;
 
-  return app.services.user.save({ nome: usnome, email: mail, senha: senha })
+  return app.services.user.save({ nome: usnome, email: mail, senha })
     .then(() => request(app).post('/auth/signin')
-      .send({ email: mail, senha: senha }))
+      .send({ email: mail, senha }))
     .then((res) => {
       expect(res.status).toBe(200);
       expect(res.body).toHaveProperty('token');
@@ -36,7 +36,7 @@ test('Não deve autenticar usuário com senha errada', () => {
   const mail = `${Date.now()}@mail.com`;
   const senha = `PASS${Date.now()}`;
 
-  return app.services.user.save({ nome: usnome, email: mail, senha: senha })
+  return app.services.user.save({ nome: usnome, email: mail, senha })
     .then(() => request(app).post('/auth/signin')
       .send({ email: mail, senha: 'senhaerrada' }))
     .then((res) => {
@@ -47,7 +47,7 @@ test('Não deve autenticar usuário com senha errada', () => {
 
 test('Não deve autenticar usuário que não existe', () => {
   return request(app).post('/auth/signin')
-    .send({ email: "usuarioNaoExiste@mail.com", senha: 'senhaerrada' })
+    .send({ email: 'usuarioNaoExiste@mail.com', senha: 'senhaerrada' })
     .then((res) => {
       expect(res.status).toBe(400);
       expect(res.body.error).toBe('Usuário e/ou senha inválidos');
@@ -60,9 +60,3 @@ test('Não deve acessar uma rota protegida sem token', () => {
       expect(res.status).toBe(401);
     });
 });
-
-
-
-
-
-

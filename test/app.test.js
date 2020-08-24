@@ -8,4 +8,3 @@ test('Deve responder na raiz', () => {
       expect(res.status).toBe(200);
     });
 });
-
