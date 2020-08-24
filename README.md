@@ -8,8 +8,6 @@ Eu estou usando mongosse então serìa só conectar a uma servidor mongo para ro
 
 Aqui está meu projeto en github (https://github.com/segodimo/tstaccenture) , mas faltava fazer pequenos ajustes como verificar todos os mensajes de saída que pedem na prova. se vocês rodarem os testes (npm run secure-mode) vão ver que praticamente tudo está funcionando com maioria dos problemas na prova. 
 
-<img src="https://github.com/segodimo/tstaccenture/blob/master/testes_jest.png" att />
-
 ![Image](https://github.com/segodimo/tstaccenture/blob/master/testes_jest.png?raw=true)
 
 Aqui está o link do heroku donde estou tentando rodar meu projeto mas ainda NÃO consegui rodar o banco, estou revisando apenas consiga eu posso enviar para vocês.
