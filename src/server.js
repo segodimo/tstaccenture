@@ -1,7 +1,7 @@
 require('dotenv').config();
 const app = require('./app');
 
-console.log('OKOKOKOKOKOKOKOKOKOKOKO');
+console.log('AWAWAWAWAWAWAWAWAW');
 console.log(process.env.PORT,'process.env.PORT');
 
 app.listen(process.env.PORT || 3001, function(){
