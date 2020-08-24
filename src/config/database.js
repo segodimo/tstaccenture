@@ -14,6 +14,6 @@ module.exports = (app) => {
   const { connection } = mongoose;
 
   connection.once('open', () => {
-  	console.log('Database is connected');
+  	console.log('>> DATABASE IS CONNECTED');
   });
 };
