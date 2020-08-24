@@ -7,8 +7,8 @@ module.exports = (app) => {
       return await Conta.findOne({ _id: filter });
   };
   
-  const findAll = async () => {
-      return await Conta.find();
+  const findAll = async (filter = {}) => {
+      return await Conta.find(filter);
   };
 
   const save = async (conta) => {
