@@ -23,9 +23,10 @@ O endpoint para buscar o usuario é https://tstaccenture.herokuapp.com/api/users
 Eu peço para vocês rodar o projeto e revisar os testes, assim poderão ver que está rodando praticamente todas as funcionalidades.
 
 
-Aqui un screenshot do primeiro teste e uns exemplos do uso de API
+Aqui un screenshot do primeiro teste no MongoDB Atlas e outra dos testes em Jest, tambem alguns exemplos do uso de API
 
 ![Image](https://github.com/segodimo/tstaccenture/blob/master/img_test_sing_up.png?raw=true)
+![Image](https://github.com/segodimo/tstaccenture/blob/master/testes_jest.png?raw=true)
 
 ##  SIGN-UP
 O endpoint do signup é https://tstaccenture.herokuapp.com/auth/signup 
