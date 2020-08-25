@@ -1,4 +1,4 @@
-Bom dia Raiana
+# Bom dia Raiana
 
 Ja, Consegui fazer várias coisas como uso de senha criptografada, JWT como token, trabalhei todo usando TDD com Jest
 
@@ -8,13 +8,13 @@ Vocês podem rodar os testes usando (npm run secure-mode), e vão ver que pratic
 
 Aqui está o link do heroku ( https://tstaccenture.herokuapp.com ) e os endpoints são:
 
-SIGN-UP:
+## SIGN-UP:
 O endpoint do signup é https://tstaccenture.herokuapp.com/auth/signup 
 
-SIGN-IN :
+## SIGN-IN :
 O endpoint do signin é https://tstaccenture.herokuapp.com/auth/signin 
 
-BUSCAR USUÁRIO:
+## BUSCAR USUÁRIO:
 O endpoint para buscar o usuario é https://tstaccenture.herokuapp.com/api/users/<token_do_usuario>
 
 
@@ -25,51 +25,51 @@ Aqui un screenshot do primeiro teste e uns exemplos do uso de API
 
 ![Image](https://github.com/segodimo/tstaccenture/blob/master/img_test_sing_up.png?raw=true)
 
-// SIGN-UP
+##  SIGN-UP
 O endpoint do signup é https://tstaccenture.herokuapp.com/auth/signup 
 
-Exemplo servidor:
+### Exemplo servidor:
 
 curl -H "Content-Type: application/json" \
 -X POST --data '{"nome": "aanome", "email": "aa@email.com", "senha": "123456", "telefones": {"numero": "123456789", "ddd": "12"}}' \
 https://tstaccenture.herokuapp.com/auth/signup 
 
-Exemplo localhost:
+### Exemplo localhost:
 
 curl -H "Content-Type: application/json" \
 -X POST --data '{"nome": "aanome", "email": "aa@email.com", "senha": "123456", "telefones": {"numero": "123456789", "ddd": "12"}}' \
 http://localhost:3001/auth/signup 
 
-// Exemplo RESPOSTA
+##  Exemplo RESPOSTA
 {"_id":"5f449b87a8b70c79148f7510","nome":"aanome","data_criacao":"2020-08-25T05:03:03.599Z","data_atualizacao":"2020-08-25T05:03:03.599Z","ultimo_login":"2020-08-25T05:03:03.599Z","email":"aa@email.com","token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJub21lIjoiYWFub21lIiwiZW1haWwiOiJhYUBlbWFpbC5jb20iLCJzZW5oYSI6IjEyMzQ1NiJ9.bXK07h72wpOl2uC_7Seec8Z2pUHMpHRjtjFI4vp1rgM"}
 
 
 
 
-// SIGN-IN 
+##  SIGN-IN 
 O endpoint do signin é https://tstaccenture.herokuapp.com/auth/signin 
 
-Exemplo servidor:
+### Exemplo servidor:
 
 curl -H "Content-Type: application/json" -X POST --data '{"email": "aa@email.com", "senha": "123456" }' \
 https://tstaccenture.herokuapp.com/auth/signin 
 
-Exemplo localhost:
+### Exemplo localhost:
 
 curl -H "Content-Type: application/json" -X POST --data '{"email": "aa@email.com", "senha": "123456" }' \
 http://localhost:3001/auth/signin 
 
 
 
-// BUSCAR USUÁRIO
+## BUSCAR USUÁRIO
 O endpoint para buscar o usuario é https://tstaccenture.herokuapp.com/api/users/<token_do_usuario>
 
-Exemplo servidor:
+### Exemplo servidor:
 
 curl -H "Authorization: bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJub21lIjoiYWFub21lIiwiZW1haWwiOiJhYUBlbWFpbC5jb20iLCJzZW5oYSI6IjEyMzQ1NiJ9.bXK07h72wpOl2uC_7Seec8Z2pUHMpHRjtjFI4vp1rgM" \
 https://tstaccenture.herokuapp.com/api/users/5f44e935d8a76a00044f094d
 
-Exemplo localhost:
+### Exemplo localhost:
 
 curl -H "Authorization: bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJub21lIjoiYWFub21lIiwiZW1haWwiOiJhYUBlbWFpbC5jb20iLCJzZW5oYSI6IjEyMzQ1NiJ9.bXK07h72wpOl2uC_7Seec8Z2pUHMpHRjtjFI4vp1rgM" \
 http://localhost:3001/api/users/5f44e7987907ef943cdac8c9
