@@ -1,5 +1,7 @@
 # Bom dia Raiana
 
+*Por favor veja aqui (https://github.com/segodimo/tstaccenture/blob/master/README.md#bom-dia-raiana) este texto formatado no markdown.*
+
 Eu ja consegui fazer várias coisas como uso de senha criptografada, JWT como token, trabalhei todo usando TDD com Jest
 
 Aqui está meu projeto no github ( https://github.com/segodimo/tstaccenture ) 

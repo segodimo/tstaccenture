@@ -1,7 +1,8 @@
 const request = require('supertest');
 const jwt = require('jwt-simple');
-
 const app = require('../../src/app');
+
+const User = require('../../src/models/User.js');
 
 const MAIN_ROUTE = '/api/users';
 const mail = `${Date.now()}@mail.com`;
@@ -118,14 +119,50 @@ test('Não deve inserir usuário com email existente', () => {
     });
 });
 
-// test('Deve buscar o usuário pelo id no path autenticando com token', () => {
-//   return request(app).get(MAIN_ROUTE)
-//     .set('authorization', `bearer ${user.token}`)
-//     .then((res) => {
-//       expect(res.status).toBe(200);
-//       expect(res.body.length).toBeGreaterThan(0);
-//     });
-// });
+
+test('Deve buscar o usuário pelo id no path autenticando com token', async () => {
+  const usnome = `NOME_${Date.now()}`;
+  const mail = `${Date.now()}@mail.com`;
+  const senha = `PASS${Date.now()}`;
+  const telefones = { numero: 123456789, ddd: 11 };
+
+  return request(app).post('/auth/signup')
+    .send({ nome: usnome, email: mail, senha, telefones })
+    .then((res) => {
+
+      return request(app).get(`${MAIN_ROUTE}/${res.body._id}`)
+        .set('authorization', `bearer ${res.body.token}`)
+        .then((res) => {
+          expect(res.status).toBe(200);
+          // expect(res.body.length).toBe(1);
+        });
+
+    });
+
+});
+
+
+test('Deve notificar se o token enviado e o token do user são diferentes', async () => {
+  const usnome = `NOME_${Date.now()}`;
+  const mail = `${Date.now()}@mail.com`;
+  const senha = `PASS${Date.now()}`;
+  const telefones = { numero: 123456789, ddd: 11 };
+
+  return request(app).post('/auth/signup')
+    .send({ nome: usnome, email: mail, senha, telefones })
+    .then((resSend) => {
+
+      return request(app).get(`${MAIN_ROUTE}/${resSend.body._id}`)
+        .set('authorization', `bearer ${resSend.body.token}_erro`)
+        .then((res) => {
+          // console.log(res.body,'res.body');
+          expect(res.status).toBe(401);
+          expect(res.body.token).not.toBe(resSend.body.token);
+        });
+
+    });
+
+});
 
 // test('Deve comparar token usado com token do usuario e ser iguais', () => {
 //   return request(app).get(MAIN_ROUTE)
