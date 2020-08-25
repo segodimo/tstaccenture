@@ -136,6 +136,26 @@ test('Não deve inserir usuário com email existente', () => {
 //     });
 // });
 
+// test('Caso o token não exista deve retornar "Não autorizado"', () => {
+//   return request(app).get(MAIN_ROUTE)
+//     .set('authorization', `bearer ${user.token}`)
+//     .then((res) => {
+//       expect(res.status).toBe(200);
+//       expect(res.body.length).toBeGreaterThan(0);
+//     });
+// });
+
+// test('Caso o token não exista deve retornar "Não autorizado"', () => {
+//   return request(app).get(MAIN_ROUTE)
+//     .set('authorization', `bearer ${user.token}`)
+//     .then((res) => {
+//       expect(res.status).toBe(200);
+//       expect(res.body.length).toBeGreaterThan(0);
+//     });
+// });
+
+
+
 test('Deve listar todos os usuarios', () => {
   return request(app).get(MAIN_ROUTE)
     .set('authorization', `bearer ${user.token}`)

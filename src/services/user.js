@@ -14,16 +14,11 @@ module.exports = (app) => {
   const findId = async (req = {}) => {
     const getUsId = await User.findOne({ _id: req.params.id });
     const authorization = req.headers.authorization.split(" ")[1];
-    // console.log(authorization,'authorization');
-    // console.log(getUsId.token,'getUsId');
     if (authorization != getUsId.token) throw new ValidationError('Não autorizado');
 
     const ultimo_login = getUsId.ultimo_login;
-    // console.log(ultimo_login,'ultimo_login');
     const agora = Date.now();
-    // console.log(agora,'agora');
     const diffTime = Math.abs((agora - ultimo_login)/(1000 * 60));
-    // console.log(diffTime,'diffTime');
     if (diffTime > 30) throw new ValidationError('Sessão inválida');
     return getUsId;
   };
@@ -32,15 +27,24 @@ module.exports = (app) => {
     return await User.find(filter);
   };
 
+  // const update = async (filter = {}) => {
+  //   console.log(filter,'filter');
+  //   return await User.update({ token: 'WAWAWAWAWA' });
+  // };
+
+  const update = async (user = {}) => {
+    console.log(user[0],'user');
+    // return await User.find(user);
+    // return await User.findByIdAndUpdate( user._id, { ultimo_login: Date.now() });
+    return await User.update({ ultimo_login: Date.now() });
+  };
+
   const getPasswdHash = (senha) => {
     const salt = bcrypt.genSaltSync(10);
     return bcrypt.hashSync(senha, salt);
   };
 
   const save = async (user) => {
-    // console.log(user,'user');
-    // console.log(user.telefones.numero,'numero');
-    // console.log(user.telefones.ddd,'ddd');
     if (!user.nome) throw new ValidationError('Nome é um atributo obrigatório');
     if (!user.email) throw new ValidationError('E-mail é um atributo obrigatório');
     if (!user.senha) throw new ValidationError('Senha é um atributo obrigatório');
@@ -79,5 +83,5 @@ module.exports = (app) => {
     return res;
   };
 
-  return { find, findId, findAll, save };
+  return { find, findId, findAll, save, update };
 };

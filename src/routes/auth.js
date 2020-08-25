@@ -19,8 +19,12 @@ module.exports = (app) => {
           // };
           // const token = jwt.encode(payload, secret);
           // user[0].token
+          // const ver = app.services.user.update('OKOKOKO');
+          const updateDataUser = app.services.user.update(user);
+          // console.log(ver,'ver');
           // console.log(user,'user');
-          res.status(200).json({ user });
+          // User.update
+          res.status(200).json({ updateDataUser });
         } else throw new ValidationError('Usuário e/ou senha inválidos');
       }).catch((err) => next(err));
   });
