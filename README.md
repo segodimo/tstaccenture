@@ -1,6 +1,6 @@
 # Bom dia Raiana
 
-Ja, Consegui fazer várias coisas como uso de senha criptografada, JWT como token, trabalhei todo usando TDD com Jest
+Eu ja consegui fazer várias coisas como uso de senha criptografada, JWT como token, trabalhei todo usando TDD com Jest
 
 Aqui está meu projeto no github ( https://github.com/segodimo/tstaccenture ) 
 
