@@ -14,6 +14,8 @@ module.exports = (app) => {
   const findId = async (req = {}) => {
     const getUsId = await User.findOne({ _id: req.params.id });
     const authorization = req.headers.authorization.split(" ")[1];
+    // console.log(authorization,'authorization');
+    if (!authorization) throw new ValidationError('Não autorizado');
     if (authorization != getUsId.token) throw new ValidationError('Não autorizado');
 
     const ultimo_login = getUsId.ultimo_login;

@@ -164,33 +164,28 @@ test('Deve notificar se o token enviado e o token do user são diferentes', asyn
 
 });
 
-// test('Deve comparar token usado com token do usuario e ser iguais', () => {
-//   return request(app).get(MAIN_ROUTE)
-//     .set('authorization', `bearer ${user.token}`)
-//     .then((res) => {
-//       expect(res.status).toBe(200);
-//       expect(res.body.length).toBeGreaterThan(0);
-//     });
-// });
 
-// test('Caso o token não exista deve retornar "Não autorizado"', () => {
-//   return request(app).get(MAIN_ROUTE)
-//     .set('authorization', `bearer ${user.token}`)
-//     .then((res) => {
-//       expect(res.status).toBe(200);
-//       expect(res.body.length).toBeGreaterThan(0);
-//     });
-// });
+test('Caso o token não exista deve retornar 401 e "Não autorizado"', async () => {
+  const usnome = `NOME_${Date.now()}`;
+  const mail = `${Date.now()}@mail.com`;
+  const senha = `PASS${Date.now()}`;
+  const telefones = { numero: 123456789, ddd: 11 };
 
-// test('Caso o token não exista deve retornar "Não autorizado"', () => {
-//   return request(app).get(MAIN_ROUTE)
-//     .set('authorization', `bearer ${user.token}`)
-//     .then((res) => {
-//       expect(res.status).toBe(200);
-//       expect(res.body.length).toBeGreaterThan(0);
-//     });
-// });
+  return request(app).post('/auth/signup')
+    .send({ nome: usnome, email: mail, senha, telefones })
+    .then((resSend) => {
 
+      return request(app).get(`${MAIN_ROUTE}/${resSend.body._id}`)
+        // .set('authorization', `bearer ${resSend.body.token}_erro`)
+        .then((res) => {
+          // console.log(res.body,'res.body');
+          expect(res.status).toBe(401);
+          // expect(res.body.error).toBe('Não autorizado');
+        });
+
+    });
+
+});
 
 
 test('Deve listar todos os usuarios', () => {
