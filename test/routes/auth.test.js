@@ -66,3 +66,26 @@ test('Não deve acessar uma rota protegida sem token', () => {
       expect(res.status).toBe(401);
     });
 });
+
+
+test('Debe atualizar data do login', async () => {
+  const usnome = `NOME_${Date.now()}`;
+  const mail = `${Date.now()}@mail.com`;
+  const senha = `PASS${Date.now()}`;
+  const telefones = { numero: 123456789, ddd: 11 };
+
+  return request(app).post('/auth/signup')
+    .send({ nome: usnome, email: mail, senha, telefones })
+    .then((resSend) => {
+
+      return request(app).post('/auth/signin')
+        .send({ email: mail, senha })
+        // .set('authorization', `bearer ${resSend.body.token}_erro`)
+        .then((res) => {
+          expect(res.body.ultimo_login).not.toBe(resSend.body.ultimo_login);
+        });
+
+    });
+
+});
+
