@@ -1,22 +1,80 @@
-Boa Tarde Raiana
+Bom dias Raiana
 
-Eu estou com problemas em subir a api no Heroku, o MongoDB Atila está muito lento
+Ja, Consegui fazer várias coisas como uso de senha criptografada, JWT como token, trabalhei todo usando TDD com Jest
 
-Consegui fazer várias coisas como uso de senha criptografada, JWT como token, trabalhei todo usando TDD com Jest e da para rodar todos os testes onde estava passando todo atè onde eu fiz, eu fiquei preocupado com subir na nuvem e não consegui rodar o link usando no .env , então testei usando direto na aplicação. (mongodb+srv://segodimo:4xTRFiByoRLr0TkD@cluster0.pehon.mongodb.net/test?retryWrites=true&w=majority)
+Aqui está meu projeto no github ( https://github.com/segodimo/tstaccenture ) 
 
-Eu estou usando mongosse então serìa só conectar a uma servidor mongo para rodar a API.
+Vocês rodarem os testes (npm run secure-mode) e vão ver que praticamente tudo está funcionando com maioria dos problemas na prova. 
 
-Aqui está meu projeto en github (https://github.com/segodimo/tstaccenture) , mas faltava fazer pequenos ajustes como verificar todos os mensajes de saída que pedem na prova. se vocês rodarem os testes (npm run secure-mode) vão ver que praticamente tudo está funcionando com maioria dos problemas na prova. 
+Aqui está o link do heroku ( https://tstaccenture.herokuapp.com ) e os endpoints são:
 
-![Image](https://github.com/segodimo/tstaccenture/blob/master/testes_jest.png?raw=true)
+SIGN-UP:
+O endpoint do signup é https://tstaccenture.herokuapp.com/auth/signup 
 
-Aqui está o link do heroku donde estou tentando rodar meu projeto mas ainda NÃO consegui rodar o banco, estou revisando apenas consiga eu posso enviar para vocês.
-https://tstaccenture.herokuapp.com:3001/
+SIGN-IN :
+O endpoint do signin é https://tstaccenture.herokuapp.com/auth/signin 
+
+BUSCAR USUÁRIO:
+O endpoint para buscar o usuario é https://tstaccenture.herokuapp.com/api/users/<token_do_usuario>
+
 
 Eu peço para vocês rodar o projeto e revisar os testes, assim poderão ver que está rodando praticamente todas as funcionalidades.
 
-Também peço, se é possível, para eu  poder terminar com os detalhes que faltam para subir no ar e finalizar o projeto porque realmente falta pouco.
 
-Obrigado de novo pela oportunidade, e se não der certo foi muito interessante ter feito esse teste para poder praticar e continuar aprendendo. 
+Aqui un screenshot do primeiro teste e uns exemplos do uso de API
+
+![Image](https://github.com/segodimo/tstaccenture/blob/master/img_test_sing_up.png?raw=true)
+
+// SIGN-UP
+O endpoint do signup é https://tstaccenture.herokuapp.com/auth/signup 
+
+Exemplo servidor:
+
+curl -H "Content-Type: application/json" \
+-X POST --data '{"nome": "aanome", "email": "aa@email.com", "senha": "123456", "telefones": {"numero": "123456789", "ddd": "12"}}' \
+https://tstaccenture.herokuapp.com/auth/signup 
+
+Exemplo localhost:
+
+curl -H "Content-Type: application/json" \
+-X POST --data '{"nome": "aanome", "email": "aa@email.com", "senha": "123456", "telefones": {"numero": "123456789", "ddd": "12"}}' \
+http://localhost:3001/auth/signup 
+
+// Exemplo RESPOSTA
+{"_id":"5f449b87a8b70c79148f7510","nome":"aanome","data_criacao":"2020-08-25T05:03:03.599Z","data_atualizacao":"2020-08-25T05:03:03.599Z","ultimo_login":"2020-08-25T05:03:03.599Z","email":"aa@email.com","token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJub21lIjoiYWFub21lIiwiZW1haWwiOiJhYUBlbWFpbC5jb20iLCJzZW5oYSI6IjEyMzQ1NiJ9.bXK07h72wpOl2uC_7Seec8Z2pUHMpHRjtjFI4vp1rgM"}
+
+
+
+
+// SIGN-IN 
+O endpoint do signin é https://tstaccenture.herokuapp.com/auth/signin 
+
+Exemplo servidor:
+
+curl -H "Content-Type: application/json" -X POST --data '{"email": "aa@email.com", "senha": "123456" }' \
+https://tstaccenture.herokuapp.com/auth/signin 
+
+Exemplo localhost:
+
+curl -H "Content-Type: application/json" -X POST --data '{"email": "aa@email.com", "senha": "123456" }' \
+http://localhost:3001/auth/signin 
+
+
+
+// BUSCAR USUÁRIO
+O endpoint para buscar o usuario é https://tstaccenture.herokuapp.com/api/users/<token_do_usuario>
+
+Exemplo servidor:
+
+curl -H "Authorization: bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJub21lIjoiYWFub21lIiwiZW1haWwiOiJhYUBlbWFpbC5jb20iLCJzZW5oYSI6IjEyMzQ1NiJ9.bXK07h72wpOl2uC_7Seec8Z2pUHMpHRjtjFI4vp1rgM" \
+https://tstaccenture.herokuapp.com/api/users/5f44e935d8a76a00044f094d
+
+Exemplo localhost:
+
+curl -H "Authorization: bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJub21lIjoiYWFub21lIiwiZW1haWwiOiJhYUBlbWFpbC5jb20iLCJzZW5oYSI6IjEyMzQ1NiJ9.bXK07h72wpOl2uC_7Seec8Z2pUHMpHRjtjFI4vp1rgM" \
+http://localhost:3001/api/users/5f44e7987907ef943cdac8c9
+
+
+Novamente muito obrigado pela oportunidade, porque realmente foi muito interessante ter feito esse teste para poder praticar e continuar aprendendo. 
 
 Atte: Sebastian

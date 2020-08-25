@@ -13,7 +13,7 @@ module.exports = (app) => {
 
   const { connection } = mongoose;
 
-  connection.once('open', () => {
-  	console.log('>> DATABASE IS CONNECTED');
-  });
+  // connection.once('open', () => {
+  // 	console.log('>> DATABASE IS CONNECTED');
+  // });
 };
