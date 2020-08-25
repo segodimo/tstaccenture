@@ -19,6 +19,8 @@ module.exports = (app) => {
     const ultimo_login = getUsId.ultimo_login;
     const agora = Date.now();
     const diffTime = Math.abs((agora - ultimo_login)/(1000 * 60));
+    // console.log(diffTime,'diffTime');
+
     if (diffTime > 30) throw new ValidationError('Sessão inválida');
     return getUsId;
   };
@@ -29,7 +31,7 @@ module.exports = (app) => {
 
   const update = async (user = {}) => {
     // console.log(user[0],'user');
-    return await User.update({ ultimo_login: Date.now() });
+    return await User.updateOne({ ultimo_login: Date.now() });
   };
 
   const getPasswdHash = (senha) => {

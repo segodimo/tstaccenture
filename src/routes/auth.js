@@ -13,7 +13,7 @@ module.exports = (app) => {
         if (!user[0]) throw new ValidationError('Usuário e/ou senha inválidos');
         if (bcrypt.compareSync(req.body.senha, user[0].senha)) {
           const updateDataUser = await app.services.user.update(user);
-          res.status(200).json(user);
+          res.status(200).json(user[0]);
         } else throw new ValidationError('Usuário e/ou senha inválidos');
       }).catch((err) => next(err));
   });

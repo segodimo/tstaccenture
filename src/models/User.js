@@ -15,7 +15,7 @@ const userSchema = new Schema(
       ddd: { type: Number, required: true },
     },
     token: { type: String, required: true },
-    ultimo_login: { type: String, required: true },
+    ultimo_login: { type: Date, required: true },
   },
   { 
     timestamps: true
