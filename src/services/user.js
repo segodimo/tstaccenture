@@ -1,5 +1,8 @@
 const bcrypt = require('bcrypt-nodejs');
+const jwt = require('jwt-simple');
 const ValidationError = require('../errors/ValidationError');
+// const app = require('../app');
+// const express = require('express');
 
 module.exports = (app) => {
   const User = require('../models/User.js');
@@ -18,21 +21,42 @@ module.exports = (app) => {
   };
 
   const save = async (user) => {
+    // console.log(user,'user');
+    // console.log(user.telefones.numero,'numero');
+    // console.log(user.telefones.ddd,'ddd');
     if (!user.nome) throw new ValidationError('Nome é um atributo obrigatório');
     if (!user.email) throw new ValidationError('E-mail é um atributo obrigatório');
     if (!user.senha) throw new ValidationError('Senha é um atributo obrigatório');
+    if (!user.telefones) throw new ValidationError('Telefone e DDD é um atributo obrigatório');
 
     const userDb = await findAll({ email: user.email });
     if (userDb && userDb.length > 0) throw new ValidationError('Já existe um usuário com esse email');
 
-    const { nome, senha, email } = user;
+    const { nome, email, senha, telefones } = user;
 
     const cryptSenha = getPasswdHash(senha);
-
-    const newUser = new User({ nome, senha: cryptSenha, email });
-
+    const ultimo_login = Date.now();
+    const newUser = new User({ nome, email, senha: cryptSenha, telefones, ultimo_login });
+    
     await newUser.save();
-    res = ({ _id: newUser._id, nome: newUser.nome, email: newUser.email });
+
+    const secret = 'Segredo!';
+    const payload = await {
+      id: newUser._id, 
+      nome: newUser.nome, 
+      email: newUser.email,
+    };
+    const token = jwt.encode(payload, secret);
+
+    const res = ({ 
+            _id: newUser._id, 
+            nome: newUser.nome, 
+            data_criacao: newUser.createdAt,
+            data_atualizacao: newUser.updatedAt,
+            ultimo_login: newUser.createdAt,
+            email: newUser.email,
+            token: token
+          });
 
     return res;
   };

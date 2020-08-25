@@ -8,9 +8,17 @@ const userSchema = new Schema(
       unique: true,
       trim: true,
     },
-    senha: { type: String, required: true },
     email: { type: String, required: true },
-  }, { timestamps: true },
+    senha: { type: String, required: true },
+    telefones: {
+      numero: { type: Number, required: true },
+      ddd: { type: Number, required: true },
+    },
+    ultimo_login: { type: String, required: true },
+  },
+  { 
+    timestamps: true
+  },
 );
 
 module.exports = model('User', userSchema);
