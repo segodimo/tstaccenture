@@ -1,10 +1,10 @@
-Bom dias Raiana
+Bom dia Raiana
 
 Ja, Consegui fazer várias coisas como uso de senha criptografada, JWT como token, trabalhei todo usando TDD com Jest
 
 Aqui está meu projeto no github ( https://github.com/segodimo/tstaccenture ) 
 
-Vocês rodarem os testes (npm run secure-mode) e vão ver que praticamente tudo está funcionando com maioria dos problemas na prova. 
+Vocês podem rodar os testes usando (npm run secure-mode), e vão ver que praticamente tudo está funcionando com maioria dos problemas na prova. 
 
 Aqui está o link do heroku ( https://tstaccenture.herokuapp.com ) e os endpoints são:
 
