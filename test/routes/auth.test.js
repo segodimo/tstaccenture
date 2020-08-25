@@ -34,6 +34,8 @@ test('Deve receber token ao logar', () => {
     });
 });
 
+// Debe atualizar data do login
+
 test('Não deve autenticar usuário com senha errada', () => {
   const usnome = `NOME_${Date.now()}`;
   const mail = `${Date.now()}@mail.com`;

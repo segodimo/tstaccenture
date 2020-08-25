@@ -10,7 +10,9 @@ module.exports = (app) => {
   });
 
   router.get('/:id', (req, res, next) => {
-    app.services.user.findId(req.params.id)
+    // console.log(req.headers.authorization,'authorization');
+    // console.log(req.params,'req.params');
+    app.services.user.findId(req)
     .then(result => {
       res.status(200).json(result);
     })

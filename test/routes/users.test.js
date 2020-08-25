@@ -118,6 +118,24 @@ test('Não deve inserir usuário com email existente', () => {
     });
 });
 
+// test('Deve buscar o usuário pelo id no path autenticando com token', () => {
+//   return request(app).get(MAIN_ROUTE)
+//     .set('authorization', `bearer ${user.token}`)
+//     .then((res) => {
+//       expect(res.status).toBe(200);
+//       expect(res.body.length).toBeGreaterThan(0);
+//     });
+// });
+
+// test('Deve comparar token usado com token do usuario e ser iguais', () => {
+//   return request(app).get(MAIN_ROUTE)
+//     .set('authorization', `bearer ${user.token}`)
+//     .then((res) => {
+//       expect(res.status).toBe(200);
+//       expect(res.body.length).toBeGreaterThan(0);
+//     });
+// });
+
 test('Deve listar todos os usuarios', () => {
   return request(app).get(MAIN_ROUTE)
     .set('authorization', `bearer ${user.token}`)

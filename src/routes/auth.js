@@ -19,7 +19,7 @@ module.exports = (app) => {
           // };
           // const token = jwt.encode(payload, secret);
           // user[0].token
-          console.log(user,'user');
+          // console.log(user,'user');
           res.status(200).json({ user });
         } else throw new ValidationError('Usuário e/ou senha inválidos');
       }).catch((err) => next(err));

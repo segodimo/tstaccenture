@@ -11,9 +11,21 @@ module.exports = (app) => {
     return await User.find(filter);
   };
 
-  const findId = async (filter = {}) => {
-    console.log(filter,'filter');
-    return await User.findOne({ _id: filter });
+  const findId = async (req = {}) => {
+    const getUsId = await User.findOne({ _id: req.params.id });
+    const authorization = req.headers.authorization.split(" ")[1];
+    // console.log(authorization,'authorization');
+    // console.log(getUsId.token,'getUsId');
+    if (authorization != getUsId.token) throw new ValidationError('Não autorizado');
+
+    const ultimo_login = getUsId.ultimo_login;
+    // console.log(ultimo_login,'ultimo_login');
+    const agora = Date.now();
+    // console.log(agora,'agora');
+    const diffTime = Math.abs((agora - ultimo_login)/(1000 * 60));
+    // console.log(diffTime,'diffTime');
+    if (diffTime > 30) throw new ValidationError('Sessão inválida');
+    return getUsId;
   };
 
   const findAll = async (filter = {}) => {
