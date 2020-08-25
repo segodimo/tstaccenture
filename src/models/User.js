@@ -14,6 +14,7 @@ const userSchema = new Schema(
       numero: { type: Number, required: true },
       ddd: { type: Number, required: true },
     },
+    token: { type: String, required: true },
     ultimo_login: { type: String, required: true },
   },
   { 

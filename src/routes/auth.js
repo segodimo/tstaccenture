@@ -12,13 +12,15 @@ module.exports = (app) => {
       .then((user) => {
         if (!user[0]) throw new ValidationError('Usuário e/ou senha inválidos');
         if (bcrypt.compareSync(req.body.senha, user[0].senha)) {
-          const payload = {
-            id: user[0].id,
-            nome: user[0].nome,
-            email: user[0].email,
-          };
-          const token = jwt.encode(payload, secret);
-          res.status(200).json({ token });
+          // const payload = {
+          //   id: user[0].id,
+          //   nome: user[0].nome,
+          //   email: user[0].email,
+          // };
+          // const token = jwt.encode(payload, secret);
+          // user[0].token
+          console.log(user,'user');
+          res.status(200).json({ user });
         } else throw new ValidationError('Usuário e/ou senha inválidos');
       }).catch((err) => next(err));
   });

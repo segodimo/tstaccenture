@@ -29,7 +29,8 @@ test('Deve receber token ao logar', () => {
       .send({ email: mail, senha }))
     .then((res) => {
       expect(res.status).toBe(200);
-      expect(res.body).toHaveProperty('token');
+      // expect(res.body).toHaveProperty('token');
+      expect(res.body.token).not.toBe('notoken');
     });
 });
 

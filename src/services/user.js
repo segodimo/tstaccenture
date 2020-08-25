@@ -11,6 +11,11 @@ module.exports = (app) => {
     return await User.find(filter);
   };
 
+  const findId = async (filter = {}) => {
+    console.log(filter,'filter');
+    return await User.findOne({ _id: filter });
+  };
+
   const findAll = async (filter = {}) => {
     return await User.find(filter);
   };
@@ -34,19 +39,20 @@ module.exports = (app) => {
 
     const { nome, email, senha, telefones } = user;
 
+    const secret = 'Segredo!';
+    const payload = await {
+      nome, 
+      email,
+      senha,
+    };
+    const token = jwt.encode(payload, secret);
+
     const cryptSenha = getPasswdHash(senha);
     const ultimo_login = Date.now();
-    const newUser = new User({ nome, email, senha: cryptSenha, telefones, ultimo_login });
+    const newUser = new User({ nome, email, senha: cryptSenha, telefones, token, ultimo_login });
     
     await newUser.save();
 
-    const secret = 'Segredo!';
-    const payload = await {
-      id: newUser._id, 
-      nome: newUser.nome, 
-      email: newUser.email,
-    };
-    const token = jwt.encode(payload, secret);
 
     const res = ({ 
             _id: newUser._id, 
@@ -55,11 +61,11 @@ module.exports = (app) => {
             data_atualizacao: newUser.updatedAt,
             ultimo_login: newUser.createdAt,
             email: newUser.email,
-            token: token
+            token: newUser.token
           });
 
     return res;
   };
 
-  return { find, findAll, save };
+  return { find, findId, findAll, save };
 };
