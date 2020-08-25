@@ -27,15 +27,8 @@ module.exports = (app) => {
     return await User.find(filter);
   };
 
-  // const update = async (filter = {}) => {
-  //   console.log(filter,'filter');
-  //   return await User.update({ token: 'WAWAWAWAWA' });
-  // };
-
   const update = async (user = {}) => {
-    console.log(user[0],'user');
-    // return await User.find(user);
-    // return await User.findByIdAndUpdate( user._id, { ultimo_login: Date.now() });
+    // console.log(user[0],'user');
     return await User.update({ ultimo_login: Date.now() });
   };
 
